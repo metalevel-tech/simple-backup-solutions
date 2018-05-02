@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/systemd-cat -t portable_backup -p info /usr/local/bin/portable_backup

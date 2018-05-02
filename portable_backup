@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Set the user that should have easy access to the backup
+# Set the target backup directory
+USER_BACKUP="pa4080"
+BACKUP_DIR="/home/${USER_BACKUP}/SystemBackup"
+
+# Get some environment variables
+TODAY="$(date +%Y-%m-%d)"
+SYSTEM="$(hostname)"
+
+## Delete backup files older than 2 weeks before create the new one.
+find "$BACKUP_DIR" -mtime +14 -type f -delete
+
+## MySQL Section. The first line is if you are using `mysqldump`, the next line is for `automysqlbackup`. I'm using both.
+#mysqldump -u'root' -p'<my-pwd>' --all-databases | gzip > "$BACKUP_DIR"/mysql-all-db.sql.gz
+#automysqlbackup
+
+## Tar Section. Create a backup file, with the current date in its name.
+## Add -h to convert the symbolic links into a regular files.
+## Backup some system files, also the entire `/home` directory, etc.
+## --exclude some directories, for example the the browser's cache, `.bash_history`, etc.
+tar zcvf "${BACKUP_DIR}/${SYSTEM}-on-google-backup-${TODAY}.tgz" \
+/etc/hosts /etc/sudoers* /var/spool/cron/crontabs /etc/cron* \
+/etc/ssh /etc/pam.d/sshd \
+/etc/fstab \
+/etc/apache2 \
+/etc/modsecurity \
+/usr/share/modsecurity-crs.3 \
+/etc/logrotate.d/apache2-modsec \
+/etc/letsencrypt \
+/etc/postfix/main.cf \
+/etc/postfix/sasl_passwd.db \
+/usr/local/bin \
+/root/.ssh \
+/root/.bashrc \
+/root/.profile \
+/var/www* \
+/home/"${USER_BACKUP}" \
+--exclude="$BACKUP_DIR" \
+--exclude="/home/${USER_BACKUP}/.cache" \
+--exclude="/home/${USER_BACKUP}/.bash_history" \
+--exclude="/home/${USER_BACKUP}/.sudo_as_admin_successful" \
+--exclude="/home/${USER_BACKUP}/.config" \
+--exclude="/home/${USER_BACKUP}/upload" \
+--exclude="/home/${USER_BACKUP}/Downloads"
+
+
+#"$BACKUP_DIR/mysql-all-db.sql.gz" /var/lib/automysqlbackup/latest/*.sql.gz \
+#/etc/phpmyadmin/apache.conf /etc/mysql/debian.cnf \
+#/etc/apache2 /etc/letsencrypt /etc/php/7.0/apache2/php.ini \
+#/var/www \
+#--exclude=/home/spas/.composer --exclude=/home/spas/.npm
+
+## MySQL Section - remove the DB backup files, if you want:
+#rm /var/lib/automysqlbackup/latest/*.sql.gz
+#rm "$BACKUP_DIR/mysql-all-db.sql.gz"
+
+#rm /var/www/html/the-location/*
+#7za a -tzip -p'<my-strong-pwd>' -mem=AES256 "/var/www/html/the-location/my-backup-$TODAY.tgz.7z" "/var/backup/my-backup-$TODAY.tgz"
+
+chown -R $USER_BACKUP:$USER_BACKUP "$BACKUP_DIR"
+

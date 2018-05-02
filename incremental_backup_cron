@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/systemd-cat -t incremental_backup -p info /usr/local/bin/incremental_backup
