@@ -14,7 +14,7 @@ exclude+=(".adobe/" ".apport-ignore.xml" ".bash_history" ".cache/" ".compiz/" ".
 exclude+=(".dbus/" ".dmrc" ".gconf/" ".gimp-2.8/" ".gitkraken/" ".gksu.lock" ".gnome/" ".gnupg/" ".gtk-bookmarks" ".gtk-recordmydesktop")
 exclude+=(".ICEauthority" ".lesshst" ".local/" ".~lock.script.code*" ".macromedia/" ".mozilla/" ".nano/" ".nv/" ".nvidia-settings-rc")
 exclude+=(".pki/" "*.swp" ".sudo_as_admin_successful" ".thumbnails/" ".Trash-1000/")
-exclude+=(".ViberPC/" ".vmware/" ".vscode" ".wget-hsts" ".wine/" ".Xauthority" ".xsession-errors*")
+exclude+=(".ViberPC/" "ViberDownloads/" ".vmware/" ".vscode" ".wget-hsts" ".wine/" ".Xauthority" ".xsession-errors*")
 
 # Remove the backups older than 2 months
 age=$(date +%F --date='2 months ago')
