@@ -14,6 +14,8 @@ find "$BACKUP_DIR" -mtime +14 -type f -delete
 
 ## MySQL Section. The first line is if you are using `mysqldump`, the next line is for `automysqlbackup`. I'm using both.
 #mysqldump -u'root' -p'<my-pwd>' --all-databases | gzip > "$BACKUP_DIR"/mysql-all-db.sql.gz
+
+# Edit '/etc/default/automysqlbackup' and apply 'LATEST=yes' 
 #automysqlbackup
 
 ## Tar Section. Create a backup file, with the current date in its name.
