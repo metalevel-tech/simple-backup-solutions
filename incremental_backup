@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# @author    Spas Z. Spasov <spas.z.spasov@gmail.com>
+# @copyright 2021 Spas Z. Spasov
+# @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 (or later)
+
 # Set the source backup directory
 src_dir=("/home/spas" "/home/guest" "/root/.bashrc" "/root/.ssh/")
 
